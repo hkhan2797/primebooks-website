@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Replace the domain below with your live domain once you have one
-Sitemap: https://www.primebooks-consulting.com/sitemap.xml
