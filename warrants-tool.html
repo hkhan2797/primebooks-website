@@ -18,7 +18,7 @@
 <!-- Page-scoped CSP. NOTE: the Amplify header CSP in customHttp.yml also applies and the
      browser enforces the STRICTER of the two — customHttp.yml must be updated to match
      for this page, or the cdnjs scripts and the API call will still be blocked. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com https://ekddzymoavirrorea7jqy63rqu0sixeb.lambda-url.us-east-1.on.aws; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
 
 <title>Warrant Analysis Tool — PrimeBooks Consulting</title>
 <style>
@@ -1401,7 +1401,7 @@ if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudf
 
    Until then, automatic reading fails gracefully and the manual waterfall works.
    ───────────────────────────────────────────────────────────────────────────── */
-const PB_AI_ENDPOINT = "https://api.anthropic.com/v1/messages";
+const PB_AI_ENDPOINT = "https://ekddzymoavirrorea7jqy63rqu0sixeb.lambda-url.us-east-1.on.aws/";
 const PB_AI_MODEL    = "claude-sonnet-4-6";
 
 /* Optional access code. Leave "" for an open tool. If you set an ACCESS_CODE on the
