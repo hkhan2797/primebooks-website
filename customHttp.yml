@@ -1,32 +1,19 @@
 customHeaders:
   # ---------------------------------------------------------------------------
-  # RULE 1 — the Warrants Tool page ONLY.
-  # Must come first: Amplify applies the first matching pattern.
-  # This page needs cdnjs (pdf.js + mammoth) and an outbound API call, which the
-  # strict site-wide policy below correctly forbids everywhere else.
-  # ---------------------------------------------------------------------------
-  - pattern: '/warrants-tool.html'
-    headers:
-      - key: 'Content-Security-Policy'
-        value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cdnjs.cloudflare.com https://ekddzymoavirrorea7jqy63rqu0sixeb.lambda-url.us-east-1.on.aws; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
-      - key: 'Strict-Transport-Security'
-        value: 'max-age=63072000; includeSubDomains; preload'
-      - key: 'X-Content-Type-Options'
-        value: 'nosniff'
-      - key: 'X-Frame-Options'
-        value: 'DENY'
-      - key: 'Referrer-Policy'
-        value: 'strict-origin-when-cross-origin'
-      - key: 'Permissions-Policy'
-        value: 'geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()'
-
-  # ---------------------------------------------------------------------------
-  # RULE 2 — everything else. Keep this as strict as it already is.
+  # One rule, applied site-wide.
+  #
+  # NOTE ON Content-Security-Policy: it is deliberately NOT set here.
+  # Each HTML page carries its own CSP in a <meta> tag, because the homepage and
+  # the warrants tool need different policies (the tool loads pdf.js and mammoth
+  # from cdnjs and calls the AI backend; the homepage should allow neither).
+  # Setting a CSP here as well would send two policies for the tool page, and the
+  # browser enforces the STRICTER of the two — which blocks the tool's libraries.
+  #
+  # Clickjacking is still covered by X-Frame-Options below, since the
+  # frame-ancestors directive is ignored when CSP is delivered via a meta tag.
   # ---------------------------------------------------------------------------
   - pattern: '**'
     headers:
-      - key: 'Content-Security-Policy'
-        value: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
       - key: 'Strict-Transport-Security'
         value: 'max-age=63072000; includeSubDomains; preload'
       - key: 'X-Content-Type-Options'
@@ -37,3 +24,5 @@ customHeaders:
         value: 'strict-origin-when-cross-origin'
       - key: 'Permissions-Policy'
         value: 'geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()'
+      - key: 'Cross-Origin-Opener-Policy'
+        value: 'same-origin'
